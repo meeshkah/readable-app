@@ -1,6 +1,8 @@
+import * as api from '../utils/api';
+
 export const SHOW_POSTS = 'SHOW_POSTS';
 
-export const showPosts = (posts) => {
+const showPosts = (posts) => {
   return {
     type: SHOW_POSTS,
     payload: {
@@ -8,3 +10,10 @@ export const showPosts = (posts) => {
     },
   }
 }
+
+export const loadPosts = () => (dispatch) => {
+  return api
+    .getPosts()
+    .then((posts) => dispatch(showPosts(posts)));
+}
+

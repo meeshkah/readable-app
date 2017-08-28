@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Post from '../components/Post';
+import { loadPosts } from '../actions';
 
 class Posts extends Component {
+  componentDidMount() {
+    this.props.dispatch(loadPosts());
+  }
+
   render() {
     return (
       <div>
-      {Object.keys(this.props.posts).map((id) => (
-        <Post key={id} post={this.props.posts[id]} />
+      {this.props.posts.map((post) => (
+        <Post key={post.id} post={post} />
       ))}
       </div>
     )
