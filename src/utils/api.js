@@ -9,7 +9,13 @@ const headers = {
   'Authorization': token
 }
 
-export const getPosts = () => {
-  return fetch(`${BASE_URI}/posts`, { headers })
+export const getPosts = (category = '') => {
+  const uri_category = category && `/${category}`;
+  return fetch(`${BASE_URI}${uri_category}/posts`, { headers })
+    .then((data) => data.json());
+};
+
+export const getCategories = () => {
+  return fetch(`${BASE_URI}/categories`, { headers })
     .then((data) => data.json());
 };

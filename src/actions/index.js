@@ -1,19 +1,36 @@
 import * as api from '../utils/api';
 
-export const SHOW_POSTS = 'SHOW_POSTS';
+export const LOAD_POSTS = 'LOAD_POSTS';
 
-const showPosts = (posts) => {
+const loadPosts = (posts) => {
   return {
-    type: SHOW_POSTS,
+    type: LOAD_POSTS,
     payload: {
       posts,
     },
   }
 }
 
-export const loadPosts = () => (dispatch) => {
+export const fetchPosts = (category = '') => (dispatch) => {
   return api
-    .getPosts()
-    .then((posts) => dispatch(showPosts(posts)));
+    .getPosts(category)
+    .then((posts) => dispatch(loadPosts(posts)));
+}
+
+export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+
+const loadCategories = (categories) => {
+  return {
+    type: LOAD_CATEGORIES,
+    payload: {
+      categories,
+    },
+  }
+}
+
+export const fetchCategories = () => (dispatch) => {
+  return api
+    .getCategories()
+    .then((categories) => dispatch(loadCategories(categories.categories)));
 }
 

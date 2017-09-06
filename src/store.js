@@ -14,3 +14,23 @@ const configureStore = (initialState = {}) => createStore(
 
 
 export default configureStore;
+
+// Store shape
+// {
+//   posts: {
+//     "post-id-1": {},
+//     "post-id-2": {},
+//     "post-id-3": {},
+//     ...
+//   }
+//   visiblePosts: [
+//     "post-id-2",
+//     "post-id-3",
+//     ...
+//   ]
+//   categories: {
+//     "category-id-1": {},
+//     "category-id-2": {},
+//   }
+//   currentCategory: "category-id-1",
+// }
