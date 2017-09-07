@@ -1,5 +1,10 @@
 import { combineReducers } from 'redux';
-import { LOAD_POSTS, LOAD_CATEGORIES } from '../actions';
+import { 
+  LOAD_POSTS, 
+  LOAD_CATEGORIES,
+  POST_UPVOTE,
+  POST_DOWNVOTE,
+} from '../actions';
 
 const normalizePosts = (posts) => {
   const normalized = [];
@@ -16,6 +21,15 @@ const posts = (state = {}, action) => {
       return {
         ...state,
         ...normalizedPosts,
+      }
+    case POST_UPVOTE:
+    case POST_DOWNVOTE:
+      const post = {
+        [action.payload.post.id]: action.payload.post,
+      };
+      return {
+        ...state,
+        ...post,
       }
     default:
       return state;

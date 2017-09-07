@@ -14,9 +14,9 @@ const Post = (props) => {
       </div>
       <div className="c-post__content">{post.body}</div>
       <div className="c-post__score">
-        <a className="c-post__up">Upvote</a>
+        <button className="c-post__up" onClick={() => props.onUpvote()}>Upvote</button>
         <div className="c-post__points">{post.voteScore}</div>
-        <a className="c-post__down">Downvote</a>
+        <button className="c-post__down" onClick={() => props.onDownvote()}>Downvote</button>
       </div>
       <div className="c-post__comments">{post.comments}</div>
       <div className="c-post__actions">

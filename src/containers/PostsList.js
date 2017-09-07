@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Post from '../components/Post';
-import { fetchPosts } from '../actions';
+import { fetchPosts, fetchUpvote, fetchDownvote } from '../actions';
 
 class PostsList extends Component {
   componentDidMount() {
@@ -15,11 +15,24 @@ class PostsList extends Component {
     }
   }
 
+  handleUpvote(postId) {
+    this.props.dispatch(fetchUpvote(postId));
+  }
+
+  handleDownvote(postId) {
+    this.props.dispatch(fetchDownvote(postId));
+  }
+
   render() {
     return (
       <div>
       {this.props.visiblePosts.map((postId) => (
-        <Post key={postId} post={this.props.posts[postId]} />
+        <Post 
+          key={postId} 
+          post={this.props.posts[postId]}
+          onUpvote={() => this.handleUpvote(postId)}
+          onDownvote={() => this.handleDownvote(postId)}
+        />
       ))}
       </div>
     );
