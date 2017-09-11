@@ -1,15 +1,21 @@
 import { combineReducers } from 'redux';
 import { 
   LOAD_POSTS, 
+  LOAD_POST, 
   LOAD_CATEGORIES,
   POST_UPVOTE,
   POST_DOWNVOTE,
+  COMMENT_UPVOTE,
+  COMMENT_DOWNVOTE,
+  LOAD_COMMENTS,
 } from '../actions';
 
-const normalizePosts = (posts) => {
+const normalize = (entities) => {
   const normalized = [];
-  posts.forEach((post) => {
-    normalized[post.id] = post;
+  entities.forEach((entity) => {
+    normalized[entity.id] = {
+      body: entity,
+    };
   });
   return normalized;
 }
@@ -17,19 +23,35 @@ const normalizePosts = (posts) => {
 const posts = (state = {}, action) => {
   switch (action.type) {
     case LOAD_POSTS:
-      const normalizedPosts = normalizePosts(action.payload.posts);
+      const normalizedPosts = normalize(action.payload.posts);
       return {
         ...state,
         ...normalizedPosts,
       }
-    case POST_UPVOTE:
-    case POST_DOWNVOTE:
-      const post = {
-        [action.payload.post.id]: action.payload.post,
-      };
+    case LOAD_POST:
       return {
         ...state,
-        ...post,
+        [action.payload.post.id]: {
+          ...state[action.payload.post.id],
+          body: action.payload.post,
+        },
+      }
+    case POST_UPVOTE:
+    case POST_DOWNVOTE:
+      return {
+        ...state,
+        [action.payload.post.id]: {
+          ...state[action.payload.post.id],
+          body: action.payload.post,
+        },
+      }
+    case LOAD_COMMENTS:
+      return {
+        ...state,
+        [action.payload.postId]: {
+          ...state[action.payload.postId],
+          comments: action.payload.comments.map((comment) => comment.id),
+        },
       }
     default:
       return state;
@@ -40,6 +62,8 @@ const visiblePosts = (state = [], action) => {
   switch (action.type) {
     case LOAD_POSTS:
       return action.payload.posts.map((post) => post.id);
+    case LOAD_POST:
+      return [action.payload.post.id];
     default:
       return state;
   }
@@ -62,11 +86,36 @@ const currentCategory = (state = '', action) => {
   }
 }
 
+const comments = (state = {}, action) => {
+  switch (action.type) {
+    case LOAD_COMMENTS:
+      const normalizedComments = normalize(action.payload.comments);
+      return {
+        ...state,
+        ...normalizedComments,
+      }
+    case COMMENT_UPVOTE:
+    case COMMENT_DOWNVOTE:
+      const comment = {
+        [action.payload.comment.id]: {
+          body: action.payload.comment,
+        },
+      };
+      return {
+        ...state,
+        ...comment,
+      }
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   posts,
   visiblePosts,
   categories,
   currentCategory,
+  comments,
 })
 
 export default rootReducer;

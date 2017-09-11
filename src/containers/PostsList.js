@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import Post from '../components/Post';
-import { fetchPosts, fetchUpvote, fetchDownvote } from '../actions';
+import { 
+  fetchPosts, 
+  fetchPostUpvote, 
+  fetchPostDownvote 
+} from '../actions';
 
 class PostsList extends Component {
   componentDidMount() {
@@ -16,11 +21,11 @@ class PostsList extends Component {
   }
 
   handleUpvote(postId) {
-    this.props.dispatch(fetchUpvote(postId));
+    this.props.dispatch(fetchPostUpvote(postId));
   }
 
   handleDownvote(postId) {
-    this.props.dispatch(fetchDownvote(postId));
+    this.props.dispatch(fetchPostDownvote(postId));
   }
 
   render() {
@@ -32,7 +37,9 @@ class PostsList extends Component {
           post={this.props.posts[postId]}
           onUpvote={() => this.handleUpvote(postId)}
           onDownvote={() => this.handleDownvote(postId)}
-        />
+        >
+          <Link to={`/${this.props.posts[postId].body.category}/${postId}`}>Read more</Link>
+        </Post>
       ))}
       </div>
     );

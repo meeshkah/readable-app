@@ -5,6 +5,7 @@ import './App.css';
 import Header from './Header';
 import CategoriesList from './CategoriesList';
 import PostsList from './PostsList';
+import PostDetail from './PostDetail';
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={PostsList} />
             <Route path="/category/:category" component={PostsList} />
+            <Route path="/:category/:postId" component={PostDetail} />
           </Switch>
         </div>
       </div>

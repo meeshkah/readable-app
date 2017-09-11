@@ -15,9 +15,33 @@ export const getPosts = (category = '') => {
     .then((data) => data.json());
 };
 
+export const getPost = (postId) => {
+  return fetch(`${BASE_URI}/posts/${postId}`, { headers })
+    .then((data) => data.json());
+}
+
+export const getComments = (postId) => {
+  return fetch(`${BASE_URI}/posts/${postId}/comments`, {headers})
+    .then((data) => data.json());
+}
+
 // option: either "upVote" or "downVote"
 export const votePost = (id, option) => {
   return fetch(`${BASE_URI}/posts/${id}`, { 
+    method: 'POST', 
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      option, 
+    }),
+  }).then((data) => data.json());
+}
+
+// option: either "upVote" or "downVote"
+export const voteComment = (id, option) => {
+  return fetch(`${BASE_URI}/comments/${id}`, { 
     method: 'POST', 
     headers: {
       ...headers,

@@ -18,7 +18,14 @@ export default configureStore;
 // Store shape
 // {
 //   posts: {
-//     "post-id-1": {},
+//     "post-id-1": {
+//       entity: {},
+//       comments: [
+//         "comment-id-1",
+//         "comment-id-2",
+//       ],
+//       category: "category-id-1",
+//     },
 //     "post-id-2": {},
 //     "post-id-3": {},
 //     ...
@@ -33,4 +40,9 @@ export default configureStore;
 //     "category-id-2": {},
 //   }
 //   currentCategory: "category-id-1",
+//   comments: {
+//     "comment-id-1": {},
+//     "comment-id-2": {},
+//     ...
+//   },
 // }
