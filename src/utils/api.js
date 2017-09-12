@@ -1,4 +1,6 @@
-const BASE_URI = 'http://localhost:5001';
+import uuidv4 from 'uuid/v4';
+
+const BASE_URI = 'http://localhost:3001';
 
 let token = localStorage.token;
 if (!token)
@@ -20,6 +22,24 @@ export const getPost = (postId) => {
     .then((data) => data.json());
 }
 
+export const addPost = (post) => {
+  return fetch(`${BASE_URI}/posts`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: uuidv4(),
+      timestamp: Date.now(),
+      title: post.title,
+      author: post.author,
+      body: post.body,
+      category: post.category,
+    }),
+  }).then((data) => data.json());
+}
+
 export const getComments = (postId) => {
   return fetch(`${BASE_URI}/posts/${postId}/comments`, {headers})
     .then((data) => data.json());
@@ -27,28 +47,28 @@ export const getComments = (postId) => {
 
 // option: either "upVote" or "downVote"
 export const votePost = (id, option) => {
-  return fetch(`${BASE_URI}/posts/${id}`, { 
-    method: 'POST', 
+  return fetch(`${BASE_URI}/posts/${id}`, {
+    method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      option, 
+      option,
     }),
   }).then((data) => data.json());
 }
 
 // option: either "upVote" or "downVote"
 export const voteComment = (id, option) => {
-  return fetch(`${BASE_URI}/comments/${id}`, { 
-    method: 'POST', 
+  return fetch(`${BASE_URI}/comments/${id}`, {
+    method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      option, 
+      option,
     }),
   }).then((data) => data.json());
 }

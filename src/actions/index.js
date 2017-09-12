@@ -1,4 +1,5 @@
 import * as api from '../utils/api';
+import { closePostModal } from './modals';
 
 export const LOAD_POSTS = 'LOAD_POSTS';
 
@@ -33,6 +34,26 @@ export const fetchPost = (postId) => (dispatch) => {
     .getPost(postId)
     .then((post) => dispatch(loadPost(post)));
 };
+
+export const ADD_POST = 'ADD_POST';
+
+const addPost = (post) => {
+  return {
+    type: ADD_POST,
+    payload: {
+      post,
+    },
+  }
+};
+
+export const newPost = (post) => (dispatch) => {
+  return api
+    .addPost(post)
+    .then((post) => {
+      dispatch(addPost(post));
+      dispatch(closePostModal());
+    });
+}
 
 export const POST_UPVOTE = 'POST_UPVOTE';
 export const POST_DOWNVOTE = 'POST_DOWNVOTE';

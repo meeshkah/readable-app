@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
-import { 
-  LOAD_POSTS, 
-  LOAD_POST, 
+import {
+  LOAD_POSTS,
+  LOAD_POST,
+  ADD_POST,
   LOAD_CATEGORIES,
   POST_UPVOTE,
   POST_DOWNVOTE,
@@ -9,6 +10,10 @@ import {
   COMMENT_DOWNVOTE,
   LOAD_COMMENTS,
 } from '../actions';
+import {
+  POST_MODAL_OPEN,
+  POST_MODAL_CLOSE,
+} from '../actions/modals';
 
 const normalize = (entities) => {
   const normalized = [];
@@ -29,6 +34,7 @@ const posts = (state = {}, action) => {
         ...normalizedPosts,
       }
     case LOAD_POST:
+    case ADD_POST:
       return {
         ...state,
         [action.payload.post.id]: {
@@ -62,8 +68,20 @@ const visiblePosts = (state = [], action) => {
   switch (action.type) {
     case LOAD_POSTS:
       return action.payload.posts.map((post) => post.id);
+    case ADD_POST:
+      return [...state, action.payload.post.id];
     case LOAD_POST:
       return [action.payload.post.id];
+    default:
+      return state;
+  }
+}
+
+const postModal = (state = false, action) => {
+  switch (action.type) {
+    case POST_MODAL_OPEN:
+    case POST_MODAL_CLOSE:
+      return action.payload.isOpen;
     default:
       return state;
   }
@@ -113,6 +131,7 @@ const comments = (state = {}, action) => {
 const rootReducer = combineReducers({
   posts,
   visiblePosts,
+  postModal,
   categories,
   currentCategory,
   comments,
