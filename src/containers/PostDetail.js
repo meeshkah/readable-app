@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import Post from '../components/Post';
 import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
+import CommentModal from './CommentModal';
 import { 
   fetchPost, 
   fetchComments,
@@ -14,6 +15,7 @@ import {
   newComment,
   deleteComment,
 } from '../actions';
+import { openCommentModal } from '../actions/modals';
 
 class PostDetail extends Component {
   componentDidMount() {
@@ -53,6 +55,10 @@ class PostDetail extends Component {
     this.props.dispatch(deleteComment(commentId));
   }
 
+  handleCommentEdit(comment) {
+    this.props.dispatch(openCommentModal(comment));
+  }
+
   render() {
     const { visiblePosts } = this.props;
     return (
@@ -77,9 +83,11 @@ class PostDetail extends Component {
               onUpvote={() => this.handleCommentUpvote(commentId)}
               onDownvote={() => this.handleCommentDownvote(commentId)}
               onDelete={() => this.handleCommentDelete(commentId)}
+              onEdit={() => this.handleCommentEdit(this.props.comments[commentId])}
             />
           ))}
         </div>
+        <CommentModal />
       </div>
     );
   }

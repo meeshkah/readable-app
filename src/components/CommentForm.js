@@ -20,16 +20,20 @@ class CommentForm extends Component {
         });
       }}>
         <h1>{this.props.comment ? "Edit comment" : "New comment"}</h1>
-        <label htmlFor="author" className="c-form__label">Author</label>
-        <input 
-          name="author" 
-          id="author" 
-          type="text" 
-          className="c-form__input" 
-          value={this.state.author} 
-          onChange={(e) => this.setState({author: e.target.value})}
-          required />
-        <label htmlFor="body" className="c-form__label"></label>
+        {!this.props.comment && (
+          <div>
+            <label htmlFor="author" className="c-form__label">Author</label>
+            <input 
+              name="author" 
+              id="author" 
+              type="text" 
+              className="c-form__input" 
+              value={this.state.author} 
+              onChange={(e) => this.setState({author: e.target.value})}
+              required />
+          </div>
+        )}
+        <label htmlFor="body" className="c-form__label">Text</label>
         <textarea 
           name="body" 
           id="body" 

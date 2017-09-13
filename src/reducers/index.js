@@ -11,10 +11,13 @@ import {
   LOAD_COMMENTS,
   ADD_COMMENT,
   DELETE_COMMENT,
+  EDIT_COMMENT,
 } from '../actions';
 import {
   POST_MODAL_OPEN,
   POST_MODAL_CLOSE,
+  COMMENT_MODAL_OPEN,
+  COMMENT_MODAL_CLOSE,
 } from '../actions/modals';
 
 const normalize = (entities) => {
@@ -97,6 +100,23 @@ const postModal = (state = false, action) => {
   }
 }
 
+const commentModal = (state = {
+  isOpen: false, 
+  comment: {},
+}, action) => {
+  switch (action.type) {
+    case COMMENT_MODAL_OPEN:
+    case COMMENT_MODAL_CLOSE:
+      return {
+        ...state,
+        comment: action.payload.comment,
+        isOpen: action.payload.isOpen,
+      };
+    default:
+      return state;
+  }
+}
+
 const categories = (state = [], action) => {
   switch (action.type) {
     case LOAD_CATEGORIES:
@@ -141,6 +161,14 @@ const comments = (state = {}, action) => {
           },
         },
       }
+    case EDIT_COMMENT:
+      return {
+        ...state,
+        [action.payload.commentId]: {
+          ...state[action.payload.commentId],
+          body: action.payload.comment,
+        },
+      }
     case COMMENT_UPVOTE:
     case COMMENT_DOWNVOTE:
       const comment = {
@@ -161,6 +189,7 @@ const rootReducer = combineReducers({
   posts,
   visiblePosts,
   postModal,
+  commentModal,
   categories,
   currentCategory,
   comments,

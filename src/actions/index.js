@@ -1,5 +1,5 @@
 import * as api from '../utils/api';
-import { closePostModal } from './modals';
+import { closePostModal, closeCommentModal } from './modals';
 
 export const LOAD_POSTS = 'LOAD_POSTS';
 
@@ -192,5 +192,26 @@ export const deleteComment = (commentId) => (dispatch) => {
     .deleteComment(commentId)
     .then((comment) => {
       dispatch(removeComment(comment.id));
+    });
+}
+
+export const EDIT_COMMENT = 'EDIT_COMMENT';
+
+const amendComment = (commentId, comment) => {
+  return {
+    type: EDIT_COMMENT,
+    payload: {
+      commentId,
+      comment,
+    },
+  }
+};
+
+export const editComment = (commentId, comment) => (dispatch) => {
+  return api
+    .editComment(commentId, comment)
+    .then((comment) => {
+      dispatch(amendComment(comment.id, comment));
+      dispatch(closeCommentModal());
     });
 }

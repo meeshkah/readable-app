@@ -17,7 +17,7 @@ const Comment = (props) => {
         <button className="c-comment__down" onClick={() => props.onDownvote()}>Downvote</button>
       </div>
       <div className="c-comment__actions">
-        <a className="c-comment__edit">Edit comment</a>
+        <button className="c-comment__edit" onClick={() => props.onEdit()}>Edit comment</button>
         <button className="c-comment__delete" onClick={() => props.onDelete()}>Delete comment</button>
       </div>
     </div>
@@ -34,6 +34,7 @@ Comment.propTypes = {
     }),
   }),
   onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
   onUpvote: PropTypes.func.isRequired,
   onDownvote: PropTypes.func.isRequired,
 };

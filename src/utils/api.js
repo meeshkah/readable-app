@@ -72,6 +72,20 @@ export const deleteComment = (commentId) => {
   }).then((data) => data.json());
 }
 
+export const editComment = (commentId, comment) => {
+  return fetch(`${BASE_URI}/comments/${commentId}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      timestamp: Date.now(),
+      body: comment.body,
+    }),
+  }).then((data) => data.json());
+}
+
 // option: either "upVote" or "downVote"
 export const votePost = (id, option) => {
   return fetch(`${BASE_URI}/posts/${id}`, {
