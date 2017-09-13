@@ -176,3 +176,21 @@ export const newComment = (comment, postId) => (dispatch) => {
     });
 }
 
+export const DELETE_COMMENT = 'DELETE_COMMENT';
+
+const removeComment = (commentId) => {
+  return {
+    type: DELETE_COMMENT,
+    payload: {
+      commentId,
+    },
+  }
+};
+
+export const deleteComment = (commentId) => (dispatch) => {
+  return api
+    .deleteComment(commentId)
+    .then((comment) => {
+      dispatch(removeComment(comment.id));
+    });
+}

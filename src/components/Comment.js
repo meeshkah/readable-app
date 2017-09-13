@@ -18,7 +18,7 @@ const Comment = (props) => {
       </div>
       <div className="c-comment__actions">
         <a className="c-comment__edit">Edit comment</a>
-        <a className="c-comment__delete">Delete comment</a>
+        <button className="c-comment__delete" onClick={() => props.onDelete()}>Delete comment</button>
       </div>
     </div>
   );
@@ -33,6 +33,9 @@ Comment.propTypes = {
       voteScore: PropTypes.number.isRequired,
     }),
   }),
+  onDelete: PropTypes.func.isRequired,
+  onUpvote: PropTypes.func.isRequired,
+  onDownvote: PropTypes.func.isRequired,
 };
 
 export default Comment;

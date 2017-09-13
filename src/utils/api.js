@@ -62,6 +62,16 @@ export const addComment = (comment, postId) => {
   }).then((data) => data.json());
 }
 
+export const deleteComment = (commentId) => {
+  return fetch(`${BASE_URI}/comments/${commentId}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    }
+  }).then((data) => data.json());
+}
+
 // option: either "upVote" or "downVote"
 export const votePost = (id, option) => {
   return fetch(`${BASE_URI}/posts/${id}`, {

@@ -12,6 +12,7 @@ import {
   fetchCommentUpvote, 
   fetchCommentDownvote,
   newComment,
+  deleteComment,
 } from '../actions';
 
 class PostDetail extends Component {
@@ -48,6 +49,10 @@ class PostDetail extends Component {
     this.props.dispatch(newComment(comment, postId));
   }
 
+  handleCommentDelete(commentId) {
+    this.props.dispatch(deleteComment(commentId));
+  }
+
   render() {
     const { visiblePosts } = this.props;
     return (
@@ -64,12 +69,14 @@ class PostDetail extends Component {
           {(visiblePosts.length > 0 &&
            this.props.posts[visiblePosts[0]].comments &&
            this.props.posts[visiblePosts[0]].comments.length > 0) && 
-           this.props.posts[visiblePosts[0]].comments.map((commentId) => (
+           this.props.posts[visiblePosts[0]].comments.map((commentId) => 
+            !this.props.comments[commentId].body.deleted && (
             <Comment
               key={commentId}
               comment={this.props.comments[commentId]}
               onUpvote={() => this.handleCommentUpvote(commentId)}
               onDownvote={() => this.handleCommentDownvote(commentId)}
+              onDelete={() => this.handleCommentDelete(commentId)}
             />
           ))}
         </div>

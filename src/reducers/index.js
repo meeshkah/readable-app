@@ -10,6 +10,7 @@ import {
   COMMENT_DOWNVOTE,
   LOAD_COMMENTS,
   ADD_COMMENT,
+  DELETE_COMMENT,
 } from '../actions';
 import {
   POST_MODAL_OPEN,
@@ -127,6 +128,17 @@ const comments = (state = {}, action) => {
         [action.payload.comment.id]: {
           ...state[action.payload.comment.id],
           body: action.payload.comment,
+        },
+      }
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        [action.payload.commentId]: {
+          ...state[action.payload.commentId],
+          body: {
+            ...state[action.payload.commentId].body,
+            deleted: true,
+          },
         },
       }
     case COMMENT_UPVOTE:
