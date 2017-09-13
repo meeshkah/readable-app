@@ -45,6 +45,23 @@ export const getComments = (postId) => {
     .then((data) => data.json());
 }
 
+export const addComment = (comment, postId) => {
+  return fetch(`${BASE_URI}/comments`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: uuidv4(),
+      timestamp: Date.now(),
+      author: comment.author,
+      body: comment.body,
+      parentId: postId,
+    }),
+  }).then((data) => data.json());
+}
+
 // option: either "upVote" or "downVote"
 export const votePost = (id, option) => {
   return fetch(`${BASE_URI}/posts/${id}`, {

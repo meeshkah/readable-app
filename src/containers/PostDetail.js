@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Post from '../components/Post';
 import Comment from '../components/Comment';
+import CommentForm from '../components/CommentForm';
 import { 
   fetchPost, 
   fetchComments,
   fetchPostUpvote, 
   fetchPostDownvote,
   fetchCommentUpvote, 
-  fetchCommentDownvote
+  fetchCommentDownvote,
+  newComment,
 } from '../actions';
 
 class PostDetail extends Component {
@@ -42,6 +44,10 @@ class PostDetail extends Component {
     this.props.dispatch(fetchCommentDownvote(commentId));
   }
 
+  handleCommentSubmit(comment, postId) {
+    this.props.dispatch(newComment(comment, postId));
+  }
+
   render() {
     const { visiblePosts } = this.props;
     return (
@@ -53,6 +59,7 @@ class PostDetail extends Component {
             onDownvote={() => this.handlePostDownvote(visiblePosts[0])}
           />
         )}
+        <CommentForm handleSubmit={(comment) => this.props.dispatch(newComment(comment, visiblePosts[0]))} />
         <div className="c-post-detail__comments">
           {(visiblePosts.length > 0 &&
            this.props.posts[visiblePosts[0]].comments &&

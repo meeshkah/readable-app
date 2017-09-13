@@ -156,3 +156,23 @@ export const fetchComments = (postId) => (dispatch) => {
     .then((comments) => dispatch(loadComments(postId, comments)));
 };
 
+export const ADD_COMMENT = 'ADD_COMMENT';
+
+const addComment = (comment, postId) => {
+  return {
+    type: ADD_COMMENT,
+    payload: {
+      comment,
+      postId,
+    },
+  }
+};
+
+export const newComment = (comment, postId) => (dispatch) => {
+  return api
+    .addComment(comment, postId)
+    .then((comment) => {
+      dispatch(addComment(comment, postId));
+    });
+}
+

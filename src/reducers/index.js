@@ -9,6 +9,7 @@ import {
   COMMENT_UPVOTE,
   COMMENT_DOWNVOTE,
   LOAD_COMMENTS,
+  ADD_COMMENT,
 } from '../actions';
 import {
   POST_MODAL_OPEN,
@@ -57,6 +58,14 @@ const posts = (state = {}, action) => {
         [action.payload.postId]: {
           ...state[action.payload.postId],
           comments: action.payload.comments.map((comment) => comment.id),
+        },
+      }
+    case ADD_COMMENT:
+      return {
+        ...state,
+        [action.payload.postId]: {
+          ...state[action.payload.postId],
+          comments: [...state[action.payload.postId].comments, action.payload.comment.id],
         },
       }
     default:
@@ -111,6 +120,14 @@ const comments = (state = {}, action) => {
       return {
         ...state,
         ...normalizedComments,
+      }
+    case ADD_COMMENT:
+      return {
+        ...state,
+        [action.payload.comment.id]: {
+          ...state[action.payload.comment.id],
+          body: action.payload.comment,
+        },
       }
     case COMMENT_UPVOTE:
     case COMMENT_DOWNVOTE:
