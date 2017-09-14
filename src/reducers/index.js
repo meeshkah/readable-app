@@ -95,6 +95,8 @@ const visiblePosts = (state = [], action) => {
       return action.payload.posts
         .filter((post) => !post.deleted)
         .map((post) => post.id);
+    case DELETE_POST:
+      return state.filter((postId) => postId !== action.payload.postId);
     case ADD_POST:
       return [...state, action.payload.post.id];
     case LOAD_POST:
@@ -196,7 +198,6 @@ const comments = (state = {}, action) => {
       }
     case DELETE_POST:
       const deletedComments = [];
-      console.log(action.payload.comments);
       action.payload.comments.forEach((commentId) => {
         deletedComments[commentId] = {
           body: {
