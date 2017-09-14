@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 import Post from '../components/Post';
 import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
@@ -78,15 +78,13 @@ class PostDetail extends Component {
                       [];
     return (
       <div className="c-post-detail">
-        {visiblePosts.length > 0 ? (
+        {visiblePosts.length > 0 && (
           <Post
             post={this.props.posts[visiblePosts[0]]}
             onUpvote={() => this.handlePostUpvote(visiblePosts[0])}
             onDownvote={() => this.handlePostDownvote(visiblePosts[0])}
             onDelete={() => this.handleDelete(visiblePosts[0], comments)}
           />
-        ) : (
-          <Redirect to="/" />
         )}
         <CommentForm handleSubmit={(comment) => this.props.dispatch(newComment(comment, visiblePosts[0]))} />
         <div className="c-post-detail__comments">

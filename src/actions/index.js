@@ -1,5 +1,6 @@
 import * as api from '../utils/api';
 import { closePostModal, closeCommentModal } from './modals';
+import history from '../history';
 
 export const LOAD_POSTS = 'LOAD_POSTS';
 
@@ -32,7 +33,13 @@ const loadPost = (post) => {
 export const fetchPost = (postId) => (dispatch) => {
   return api
     .getPost(postId)
-    .then((post) => dispatch(loadPost(post)));
+    .then((post) => {
+      if (post.error) {
+        history.push(`/`);
+      } else {
+        dispatch(loadPost(post));
+      }
+    });
 };
 
 export const ADD_POST = 'ADD_POST';
@@ -67,11 +74,12 @@ const removePost = (postId, comments) => {
   }
 };
 
-export const deletePost = (postId, postComments = []) => (dispatch) => {
+export const deletePost = (postId, postComments = [], currentCategory = '') => (dispatch) => {
   return api
     .deletePost(postId)
     .then((post) => {
       dispatch(removePost(post.id, postComments));
+      history.push(`/${currentCategory}`);
     });
 }
 

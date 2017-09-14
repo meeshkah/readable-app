@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import Post from '../components/Post';
-import { 
-  fetchPosts, 
-  fetchPostUpvote, 
+import {
+  fetchPosts,
+  fetchPostUpvote,
   fetchPostDownvote,
   deletePost,
 } from '../actions';
@@ -30,15 +30,15 @@ class PostsList extends Component {
   }
 
   handleDelete(postId, postComments) {
-    this.props.dispatch(deletePost(postId, postComments));
+    this.props.dispatch(deletePost(postId, postComments, this.props.category));
   }
 
   render() {
     return (
       <div>
       {this.props.visiblePosts.map((postId) => (
-        <Post 
-          key={postId} 
+        <Post
+          key={postId}
           post={this.props.posts[postId]}
           onUpvote={() => this.handleUpvote(postId)}
           onDownvote={() => this.handleDownvote(postId)}
