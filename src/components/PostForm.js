@@ -1,34 +1,86 @@
-import React from 'react';
-import serialize from 'form-serialize';
+import React, { Component } from 'react';
 
-const PostForm = (props) => {
-  const { post, categories, handleSubmit } = props;
-  const values = post ? {...post.body} : {};
+class PostForm extends Component {
+  state = this.props.post ? {
+    ...this.props.post.body,
+  } : {};
 
-  return (
-    <form className="c-form" onSubmit={(e) => {
-      e.preventDefault();
-      handleSubmit(serialize(e.target, {hash: true}));
-    }}>
-      <h1>{post ? "Edit post" : "New post"}</h1>
-      <label htmlFor="title" className="c-form__label">Title</label>
-      <input name="title" id="title" type="text" className="c-form__input" value={values.title} required />
-      <label htmlFor="author" className="c-form__label">Author</label>
-      <input name="author" id="author" type="text" className="c-form__input" value={values.author} required />
-      <label htmlFor="category" className="c-form__label">Category</label>
-      <select name="category" id="category" className="c-form__select" value={values.category} required>
-        <option value="" disabled>Select a category</option>
-        {categories.map((category) => (
-          <option key={category.path} value={category.path}>{category.name}</option>
-        ))}
-      </select>
-      <label htmlFor="body" className="c-form__label"></label>
-      <textarea name="body" id="body" cols="30" rows="20" className="c-form__text" required>
-        {values.body}
-      </textarea>
-      <button className="c-form__submit">Submit post</button>
-    </form>
-  );
+  render() {
+    const { post, categories, handleSubmit } = this.props;
+    return (
+      <form className="c-form" onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit({
+          ...this.state,
+        });
+        this.setState({
+          author: '',
+          body: '',
+        });
+      }}>
+        <h1>{post ? "Edit post" : "New post"}</h1>
+        <div>
+          <label htmlFor="title" className="c-form__label">Title</label>
+          <input
+            name="title"
+            id="title"
+            type="text"
+            className="c-form__input"
+            value={this.state.title}
+            onChange={(e) => this.setState({title: e.target.value})}
+            required
+          />
+        </div>
+        {!post && (
+          <div>
+            <label htmlFor="author" className="c-form__label">Author</label>
+            <input
+              name="author"
+              id="author"
+              type="text"
+              className="c-form__input"
+              value={this.state.author}
+              onChange={(e) => this.setState({author: e.target.value})}
+              required
+            />
+          </div>
+        )}
+        {!post && (
+          <div>
+            <label htmlFor="category" className="c-form__label">Category</label>
+            <select
+              name="category"
+              id="category"
+              className="c-form__select"
+              value={this.state.category}
+              onChange={(e) => this.setState({category: e.target.value})}
+              required
+            >
+              <option value="" disabled>Select a category</option>
+              {categories.map((category) => (
+                <option key={category.path} value={category.path}>{category.name}</option>
+              ))}
+            </select>
+          </div>
+        )}
+        <div>
+          <label htmlFor="body" className="c-form__label">Text</label>
+          <textarea
+            name="body"
+            id="body"
+            cols="30"
+            rows="20"
+            className="c-form__text"
+            onChange={(e) => this.setState({body: e.target.value})}
+            required
+          >
+            {this.state.body}
+          </textarea>
+        </div>
+        <button className="c-form__submit">Submit post</button>
+      </form>
+    );
+  }
 }
 
 export default PostForm;

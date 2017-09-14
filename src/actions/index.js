@@ -83,6 +83,26 @@ export const deletePost = (postId, postComments = [], currentCategory = '') => (
     });
 }
 
+export const EDIT_POST = 'EDIT_POST';
+
+const amendPost = (postId, post) => {
+  return {
+    type: EDIT_POST,
+    payload: {
+      postId,
+      post,
+    },
+  }
+};
+
+export const editPost = (postId, post) => (dispatch) => {
+  return api
+    .editPost(postId, post)
+    .then((post) => {
+      dispatch(amendPost(post.id, post));
+      dispatch(closePostModal());
+    });
+}
 
 export const POST_UPVOTE = 'POST_UPVOTE';
 export const POST_DOWNVOTE = 'POST_DOWNVOTE';

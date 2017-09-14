@@ -47,6 +47,20 @@ export const deletePost = (postId) => {
   }).then((data) => data.json());
 }
 
+export const editPost = (postId, post) => {
+  return fetch(`${BASE_URI}/posts/${postId}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      title: post.title,
+      body: post.body,
+    }),
+  }).then((data) => data.json());
+}
+
 export const getComments = (postId) => {
   return fetch(`${BASE_URI}/posts/${postId}/comments`, {headers})
     .then((data) => data.json());

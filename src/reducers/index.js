@@ -4,6 +4,7 @@ import {
   LOAD_POST,
   ADD_POST,
   DELETE_POST,
+  EDIT_POST,
   LOAD_CATEGORIES,
   POST_UPVOTE,
   POST_DOWNVOTE,
@@ -59,6 +60,14 @@ const posts = (state = {}, action) => {
           },
         },
       }
+    case EDIT_POST:
+      return {
+        ...state,
+        [action.payload.postId]: {
+          ...state[action.payload.postId],
+          body: action.payload.post,
+        },
+      }
     case POST_UPVOTE:
     case POST_DOWNVOTE:
       return {
@@ -106,18 +115,25 @@ const visiblePosts = (state = [], action) => {
   }
 }
 
-const postModal = (state = false, action) => {
+const postModal = (state = {
+  isOpen: false,
+  post: {},
+}, action) => {
   switch (action.type) {
     case POST_MODAL_OPEN:
     case POST_MODAL_CLOSE:
-      return action.payload.isOpen;
+      return {
+        ...state,
+        post: action.payload.post,
+        isOpen: action.payload.isOpen,
+      };
     default:
       return state;
   }
 }
 
 const commentModal = (state = {
-  isOpen: false, 
+  isOpen: false,
   comment: {},
 }, action) => {
   switch (action.type) {

@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import Post from '../components/Post';
+import PostModal from './PostModal';
 import {
   fetchPosts,
   fetchPostUpvote,
   fetchPostDownvote,
   deletePost,
 } from '../actions';
+import { openPostModal } from '../actions/modals';
 
 class PostsList extends Component {
   componentDidMount() {
@@ -33,6 +35,10 @@ class PostsList extends Component {
     this.props.dispatch(deletePost(postId, postComments, this.props.category));
   }
 
+  handlePostEdit(post) {
+    this.props.dispatch(openPostModal(post));
+  }
+
   render() {
     return (
       <div>
@@ -43,10 +49,12 @@ class PostsList extends Component {
           onUpvote={() => this.handleUpvote(postId)}
           onDownvote={() => this.handleDownvote(postId)}
           onDelete={() => this.handleDelete(postId, this.props.posts[postId].comments)}
+          onEdit={() => this.handlePostEdit(this.props.posts[postId])}
         >
           <Link to={`/${this.props.posts[postId].body.category}/${postId}`}>Read more</Link>
         </Post>
       ))}
+      <PostModal />
       </div>
     );
   }

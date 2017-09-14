@@ -17,24 +17,13 @@ import {
   newComment,
   deleteComment,
 } from '../actions';
-import { openCommentModal } from '../actions/modals';
+import { openCommentModal, openPostModal } from '../actions/modals';
 
 class PostDetail extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPost(this.props.postId));
     this.props.dispatch(fetchComments(this.props.postId));
   }
-
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.visiblePosts.length > 0 && this.props.posts[this.props.postId].body.deleted) {
-  //     console.log('Time to redirect');
-  //     return <Redirect to="/" />
-  //   }
-  //   // if (this.props.postId !== prevProps.postId) {
-  //   //   this.props.dispatch(fetchPost(this.props.postId));
-  //   //   this.props.dispatch(fetchComments(this.props.postId));
-  //   // }
-  // }
 
   // TODO: DRY handles (also used in PostsList)
   handlePostUpvote(postId) {
@@ -45,8 +34,12 @@ class PostDetail extends Component {
     this.props.dispatch(fetchPostDownvote(postId));
   }
 
-  handleDelete(postId, postComments) {
+  handlePostDelete(postId, postComments) {
     this.props.dispatch(deletePost(postId, postComments));
+  }
+
+  handlePostEdit(post) {
+    this.props.dispatch(openPostModal(post));
   }
 
   handleCommentUpvote(commentId) {
@@ -83,7 +76,8 @@ class PostDetail extends Component {
             post={this.props.posts[visiblePosts[0]]}
             onUpvote={() => this.handlePostUpvote(visiblePosts[0])}
             onDownvote={() => this.handlePostDownvote(visiblePosts[0])}
-            onDelete={() => this.handleDelete(visiblePosts[0], comments)}
+            onDelete={() => this.handlePostDelete(visiblePosts[0], comments)}
+            onEdit={() => this.handlePostEdit(this.props.posts[visiblePosts[0]])}
           />
         )}
         <CommentForm handleSubmit={(comment) => this.props.dispatch(newComment(comment, visiblePosts[0]))} />

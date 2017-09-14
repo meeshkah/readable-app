@@ -1,10 +1,11 @@
 export const POST_MODAL_OPEN = 'POST_MODAL_OPEN';
 
-export const openPostModal = () => {
+export const openPostModal = (post) => {
   return {
     type: POST_MODAL_OPEN,
     payload: {
       isOpen: true,
+      post,
     },
   }
 };
@@ -16,6 +17,7 @@ export const closePostModal = () => {
     type: POST_MODAL_CLOSE,
     payload: {
       isOpen: false,
+      post: {},
     },
   }
 };

@@ -23,7 +23,7 @@ class CommentModal extends Component {
   }
 }
 
-const mapStateToProps = (state = {}, { props }) => ({
+const mapStateToProps = (state = {}) => ({
   comments: state.posts,
   isOpen: state.commentModal.isOpen,
   comment: state.commentModal.comment,
