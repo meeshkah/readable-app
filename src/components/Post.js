@@ -19,8 +19,8 @@ const Post = (props) => {
       </div>
       <div className="c-post__comments">{post.body.comments}</div>
       <div className="c-post__actions">
-        <a className="c-post__edit">Edit post</a>
-        <a className="c-post__delete">Delete post</a>
+        <button className="c-post__edit" onClick={() => props.onEdit()}>Edit post</button>
+        <button className="c-post__delete" onClick={() => props.onDelete()}>Delete post</button>
       </div>
       <div>{children}</div>
     </div>
@@ -39,8 +39,10 @@ Post.propTypes = {
       comments: PropTypes.number,
     }),
   }),
-
-
+  onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onUpvote: PropTypes.func.isRequired,
+  onDownvote: PropTypes.func.isRequired,
 };
 
 export default Post;

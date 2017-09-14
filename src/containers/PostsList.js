@@ -6,7 +6,8 @@ import Post from '../components/Post';
 import { 
   fetchPosts, 
   fetchPostUpvote, 
-  fetchPostDownvote 
+  fetchPostDownvote,
+  deletePost,
 } from '../actions';
 
 class PostsList extends Component {
@@ -28,6 +29,10 @@ class PostsList extends Component {
     this.props.dispatch(fetchPostDownvote(postId));
   }
 
+  handleDelete(postId, postComments) {
+    this.props.dispatch(deletePost(postId, postComments));
+  }
+
   render() {
     return (
       <div>
@@ -37,6 +42,7 @@ class PostsList extends Component {
           post={this.props.posts[postId]}
           onUpvote={() => this.handleUpvote(postId)}
           onDownvote={() => this.handleDownvote(postId)}
+          onDelete={() => this.handleDelete(postId, this.props.posts[postId].comments)}
         >
           <Link to={`/${this.props.posts[postId].body.category}/${postId}`}>Read more</Link>
         </Post>

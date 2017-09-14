@@ -55,6 +55,27 @@ export const newPost = (post) => (dispatch) => {
     });
 }
 
+export const DELETE_POST = 'DELETE_POST';
+
+const removePost = (postId, comments) => {
+  return {
+    type: DELETE_POST,
+    payload: {
+      postId,
+      comments,
+    },
+  }
+};
+
+export const deletePost = (postId, postComments = []) => (dispatch) => {
+  return api
+    .deletePost(postId)
+    .then((post) => {
+      dispatch(removePost(post.id, postComments));
+    });
+}
+
+
 export const POST_UPVOTE = 'POST_UPVOTE';
 export const POST_DOWNVOTE = 'POST_DOWNVOTE';
 

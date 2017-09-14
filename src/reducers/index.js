@@ -3,6 +3,7 @@ import {
   LOAD_POSTS,
   LOAD_POST,
   ADD_POST,
+  DELETE_POST,
   LOAD_CATEGORIES,
   POST_UPVOTE,
   POST_DOWNVOTE,
@@ -47,6 +48,17 @@ const posts = (state = {}, action) => {
           body: action.payload.post,
         },
       }
+    case DELETE_POST:
+      return {
+        ...state,
+        [action.payload.postId]: {
+          ...state[action.payload.postId],
+          body: {
+            ...state[action.payload.postId].body,
+            deleted: true,
+          },
+        },
+      }
     case POST_UPVOTE:
     case POST_DOWNVOTE:
       return {
@@ -80,7 +92,9 @@ const posts = (state = {}, action) => {
 const visiblePosts = (state = [], action) => {
   switch (action.type) {
     case LOAD_POSTS:
-      return action.payload.posts.map((post) => post.id);
+      return action.payload.posts
+        .filter((post) => !post.deleted)
+        .map((post) => post.id);
     case ADD_POST:
       return [...state, action.payload.post.id];
     case LOAD_POST:
@@ -179,6 +193,21 @@ const comments = (state = {}, action) => {
       return {
         ...state,
         ...comment,
+      }
+    case DELETE_POST:
+      const deletedComments = [];
+      console.log(action.payload.comments);
+      action.payload.comments.forEach((commentId) => {
+        deletedComments[commentId] = {
+          body: {
+            ...state[commentId].body,
+            deleted: true,
+          },
+        };
+      });
+      return {
+        ...state,
+        ...deletedComments,
       }
     default:
       return state;

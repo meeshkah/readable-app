@@ -40,6 +40,13 @@ export const addPost = (post) => {
   }).then((data) => data.json());
 }
 
+export const deletePost = (postId) => {
+  return fetch(`${BASE_URI}/posts/${postId}`, {
+    method: 'DELETE',
+    headers,
+  }).then((data) => data.json());
+}
+
 export const getComments = (postId) => {
   return fetch(`${BASE_URI}/posts/${postId}/comments`, {headers})
     .then((data) => data.json());
@@ -65,10 +72,7 @@ export const addComment = (comment, postId) => {
 export const deleteComment = (commentId) => {
   return fetch(`${BASE_URI}/comments/${commentId}`, {
     method: 'DELETE',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json',
-    }
+    headers,
   }).then((data) => data.json());
 }
 
