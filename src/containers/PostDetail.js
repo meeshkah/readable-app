@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { Redirect } from 'react-router-dom'
 import Post from '../components/Post';
 import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
 import CommentModal from './CommentModal';
-import { 
-  fetchPost, 
+import {
+  fetchPost,
+  deletePost,
   fetchComments,
-  fetchPostUpvote, 
+  fetchPostUpvote,
   fetchPostDownvote,
-  fetchCommentUpvote, 
+  fetchCommentUpvote,
   fetchCommentDownvote,
   newComment,
   deleteComment,
@@ -24,10 +26,14 @@ class PostDetail extends Component {
   }
 
   // componentDidUpdate(prevProps) {
-  //   if (this.props.postId !== prevProps.postId) {
-  //     this.props.dispatch(fetchPost(this.props.postId));
-  //     this.props.dispatch(fetchComments(this.props.postId));
+  //   if (this.props.visiblePosts.length > 0 && this.props.posts[this.props.postId].body.deleted) {
+  //     console.log('Time to redirect');
+  //     return <Redirect to="/" />
   //   }
+  //   // if (this.props.postId !== prevProps.postId) {
+  //   //   this.props.dispatch(fetchPost(this.props.postId));
+  //   //   this.props.dispatch(fetchComments(this.props.postId));
+  //   // }
   // }
 
   // TODO: DRY handles (also used in PostsList)
@@ -37,6 +43,10 @@ class PostDetail extends Component {
 
   handlePostDownvote(postId) {
     this.props.dispatch(fetchPostDownvote(postId));
+  }
+
+  handleDelete(postId, postComments) {
+    this.props.dispatch(deletePost(postId, postComments));
   }
 
   handleCommentUpvote(commentId) {
@@ -61,21 +71,26 @@ class PostDetail extends Component {
 
   render() {
     const { visiblePosts } = this.props;
+    const comments = (visiblePosts.length > 0 &&
+                      this.props.posts[visiblePosts[0]].comments &&
+                      this.props.posts[visiblePosts[0]].comments.length > 0) ?
+                      this.props.posts[visiblePosts[0]].comments :
+                      [];
     return (
       <div className="c-post-detail">
-        {visiblePosts.length > 0 && (
+        {visiblePosts.length > 0 ? (
           <Post
             post={this.props.posts[visiblePosts[0]]}
             onUpvote={() => this.handlePostUpvote(visiblePosts[0])}
             onDownvote={() => this.handlePostDownvote(visiblePosts[0])}
+            onDelete={() => this.handleDelete(visiblePosts[0], comments)}
           />
+        ) : (
+          <Redirect to="/" />
         )}
         <CommentForm handleSubmit={(comment) => this.props.dispatch(newComment(comment, visiblePosts[0]))} />
         <div className="c-post-detail__comments">
-          {(visiblePosts.length > 0 &&
-           this.props.posts[visiblePosts[0]].comments &&
-           this.props.posts[visiblePosts[0]].comments.length > 0) && 
-           this.props.posts[visiblePosts[0]].comments.map((commentId) => 
+          {comments.map((commentId) =>
             !this.props.comments[commentId].body.deleted && (
             <Comment
               key={commentId}
