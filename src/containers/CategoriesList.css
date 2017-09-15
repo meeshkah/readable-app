@@ -1,0 +1,17 @@
+.c-categories {
+  background-color: #f9ba32;
+  padding: 1rem 2rem;
+}
+
+  .c-category {
+    color: #2f3131;
+    text-decoration: none;
+    font-family: "Fjalla One", sans-serif;
+    font-size: 1.25rem;
+  }
+
+  .c-category:not(:last-of-type)::after {
+    display: inline-block;
+    padding: 0 .25em;
+    content: "⁕";
+  }

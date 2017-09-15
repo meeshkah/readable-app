@@ -1,0 +1,82 @@
+.c-post {
+  margin: 2rem;
+  padding: 2rem;
+  background-color: #f8f1e5;
+}
+
+  .c-post__title {
+    margin: 0;
+    margin-bottom: .5rem;
+  }
+
+  .c-post__meta {
+    color: #6a6a6a;
+    letter-spacing: .025em;
+  }
+
+  .c-post__meta::after {
+    display: block;
+    font-size: 2rem;
+    color: #426e86;
+    content: "❧";
+  }
+
+  .c-post__content {
+    padding: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .c-post__score {
+    position: absolute;
+    top: -1rem;
+    left: -1rem;
+    display: inline-flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 45em) {
+    .c-post__score {
+      position: relative;
+      top: auto;
+      left: auto;
+    }
+  }
+
+  .c-post__actions {
+    position: absolute;
+    left: 50%;
+    bottom: -1rem;
+    display: inline-flex;
+    transform: translateX(-50%);
+  }
+
+    .c-post__edit,
+    .c-post__delete {
+      margin: 0;
+    }
+
+    .c-post__points {
+      background-color: #f9ba32;
+      padding: .5rem;
+      font-family: "Fjalla One", sans-serif;
+      font-size: 1.5rem;
+    }
+
+    .c-post__up,
+    .c-post__down {
+      margin: 0;
+    }
+  
+  .c-post__more {
+    font-family: "Fjalla One", sans-serif;
+    color: #426e86;
+    text-transform: capitalize;
+    text-decoration: none;
+  }
+
+  .c-post__more::after {
+    display: inline-block;
+    font-size: 1.25em;
+    margin-left: .25em;
+    content: "☞";
+  }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Form.css';
 
 class CommentForm extends Component {
   state = {
@@ -8,7 +9,7 @@ class CommentForm extends Component {
 
   render() {
     return (
-      <form className="c-form" onSubmit={(e) => {
+      <form className="c-form c-form--comment" onSubmit={(e) => {
         e.preventDefault();
         this.props.handleSubmit({
           author: this.state.author,
@@ -19,7 +20,7 @@ class CommentForm extends Component {
           body: '',
         });
       }}>
-        <h1>{this.props.comment ? "Edit comment" : "New comment"}</h1>
+        <h1 className="c-form__title">{this.props.comment ? "Edit comment" : "New comment"}</h1>
         {!this.props.comment && (
           <div>
             <label htmlFor="author" className="c-form__label">Author</label>
@@ -38,7 +39,7 @@ class CommentForm extends Component {
           name="body" 
           id="body" 
           cols="30" 
-          rows="20" 
+          rows="10" 
           className="c-form__text"
           value={this.state.body}
           onChange={(e) => this.setState({body: e.target.value})}

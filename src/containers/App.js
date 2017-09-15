@@ -14,7 +14,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header text="📖 Readable" />
+        <Header text="Readable" />
         <CategoriesList />
         <button className="c-new" onClick={() => this.props.dispatch(openPostModal())}>New post</button>
         <div className="c-container">

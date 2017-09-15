@@ -1,5 +1,32 @@
+* {
+  position: relative;
+}
+
+html {
+  font-size: 1em;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-color: #fff;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Fjalla One", sans-serif;
+}
+
+button {
+  appearance: none;
+  border: 0 none;
+  border-radius: 0;
+  background-color: #426e86;
+  color: #f9ba32;
+  font-family: "Fjalla One", sans-serif;
+  font-size: 1rem;
+  padding: .5em 1em;
+  margin: .5em 1em;
 }

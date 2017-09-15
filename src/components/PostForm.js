@@ -3,7 +3,12 @@ import React, { Component } from 'react';
 class PostForm extends Component {
   state = this.props.post ? {
     ...this.props.post.body,
-  } : {};
+  } : {
+    title: '',
+    author: '',
+    body: '',
+    category: '',
+  };
 
   render() {
     const { post, categories, handleSubmit } = this.props;
@@ -71,10 +76,10 @@ class PostForm extends Component {
             cols="30"
             rows="20"
             className="c-form__text"
+            value={this.state.body}
             onChange={(e) => this.setState({body: e.target.value})}
             required
           >
-            {this.state.body}
           </textarea>
         </div>
         <button className="c-form__submit">Submit post</button>

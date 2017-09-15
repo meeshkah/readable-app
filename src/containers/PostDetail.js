@@ -81,6 +81,7 @@ class PostDetail extends Component {
           />
         )}
         <CommentForm handleSubmit={(comment) => this.props.dispatch(newComment(comment, visiblePosts[0]))} />
+        {comments.length > 0 && <h2>Comments</h2>}
         <div className="c-post-detail__comments">
           {comments.map((commentId) =>
             !this.props.comments[commentId].body.deleted && (

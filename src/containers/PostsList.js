@@ -51,7 +51,7 @@ class PostsList extends Component {
           onDelete={() => this.handleDelete(postId, this.props.posts[postId].comments)}
           onEdit={() => this.handlePostEdit(this.props.posts[postId])}
         >
-          <Link to={`/${this.props.posts[postId].body.category}/${postId}`}>Read more</Link>
+          <Link className="c-post__more" to={`/${this.props.posts[postId].body.category}/${postId}`}>Read more</Link>
         </Post>
       ))}
       <PostModal />

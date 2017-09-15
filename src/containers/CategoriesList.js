@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Category from '../components/Category';
 import { fetchCategories } from '../actions';
+import './CategoriesList.css';
 
 class CategoriesList extends Component {
   componentDidMount() {

@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import './Post.css';
 
 const Post = (props) => {
   const { post, children } = props;
@@ -7,9 +9,7 @@ const Post = (props) => {
     <div className="c-post">
       <h1 className="c-post__title">{post.body.title}</h1>
       <div className="c-post__meta">
-        <div className="c-post__time">{(new Date(post.body.timestamp)).toString()}</div>
-        <div className="c-post__category">{post.body.category}</div>
-        <div className="c-post__author">{post.body.author}</div>
+        Posted <span className="c-post__time" title={moment(post.body.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>{moment(post.body.timestamp).fromNow()}</span> in <span className="c-post__category">{post.body.category}</span> by <span className="c-post__author">{post.body.author}</span>
       </div>
       <div className="c-post__content">{post.body.body}</div>
       <div className="c-post__score">

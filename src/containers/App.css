@@ -1,12 +1,29 @@
 .App {
   text-align: center;
+  font-family: "Average", serif;
 }
 
 .App-intro {
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.App-header h2 {
+  margin-top: 0;
+}
+
+.App-header a {
+  color: #f9ba32;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.App-header a::before {
+  display: block;
+  text-align: center;
+  content: "🔖";
+  font-size: 2rem;
+}
+
+.c-new {
+  font-size: 1.5rem;
 }

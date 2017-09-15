@@ -1,0 +1,59 @@
+.c-comment {
+  margin: 2rem;
+  padding: 2rem;
+  background-color: #f8f1e5;
+}
+
+  .c-comment__meta {
+    color: #6a6a6a;
+    letter-spacing: .025em;
+  }
+
+  .c-comment__content {
+    padding: 1rem;
+    font-size: 1.25rem;
+  }
+
+  .c-comment__score {
+    position: absolute;
+    top: -1rem;
+    left: -1rem;
+    display: inline-flex;
+    flex-direction: column;
+    font-size: .875rem;
+  }
+
+  @media (max-width: 45em) {
+    .c-comment__score {
+      position: relative;
+      top: auto;
+      left: auto;
+    }
+  }
+
+  .c-comment__actions {
+    position: absolute;
+    left: 50%;
+    bottom: -1rem;
+    display: inline-flex;
+    transform: translateX(-50%);
+  }
+
+    .c-comment__edit,
+    .c-comment__delete {
+      margin: 0;
+    }
+
+    .c-comment__points {
+      background-color: #f9ba32;
+      padding: .5rem;
+      font-family: "Fjalla One", sans-serif;
+      font-size: 1.25em;
+    }
+
+    .c-comment__up,
+    .c-comment__down {
+      font-size: 1em;
+      margin: 0;
+    }
+  

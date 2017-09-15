@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import './Comment.css';
 
 const Comment = (props) => {
   const { comment } = props;
@@ -7,8 +9,7 @@ const Comment = (props) => {
   return (
     <div className="c-comment">
       <div className="c-comment__meta">
-        <div className="c-comment__time">{(new Date(comment.body.timestamp)).toString()}</div>
-        <div className="c-comment__author">{comment.body.author}</div>
+        Posted <span className="c-comment__time" title={moment(comment.body.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")}>{moment(comment.body.timestamp).fromNow()}</span> by <span className="c-comment__author">{comment.body.author}</span>
       </div>
       <div className="c-comment__content">{comment.body.body}</div>
       <div className="c-comment__score">
