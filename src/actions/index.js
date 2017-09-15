@@ -17,7 +17,11 @@ const loadPosts = (posts, sortBy = '') => {
 export const fetchPosts = (category = '', sortBy = '') => (dispatch) => {
   return api
     .getPosts(category)
-    .then((posts) => dispatch(loadPosts(posts, sortBy)));
+    .then((posts) => {
+      dispatch(loadPosts(posts, sortBy));
+      // TODO: This is quite costly to do for every post. Rethink.
+      posts.forEach((post) => dispatch(fetchComments(post.id)));
+    });
 };
 
 export const SORT_POSTS = 'SORT_POSTS';

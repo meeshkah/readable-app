@@ -4,7 +4,8 @@ import moment from 'moment';
 import './Post.css';
 
 const Post = (props) => {
-  const { post, children } = props;
+  const { post, comments, children } = props;
+
   return (
     <div className="c-post">
       <h1 className="c-post__title">{post.body.title}</h1>
@@ -17,7 +18,7 @@ const Post = (props) => {
         <div className="c-post__points">{post.body.voteScore}</div>
         <button className="c-post__down" onClick={() => props.onDownvote()}>Downvote</button>
       </div>
-      <div className="c-post__comments">{post.body.comments}</div>
+      <div className="c-post__comments">{comments && comments.length > 0 ? `${comments.length} comment${comments.length > 1 ? 's' : ''}` : 'No comments yet'}</div>
       <div className="c-post__actions">
         <button className="c-post__edit" onClick={() => props.onEdit()}>Edit post</button>
         <button className="c-post__delete" onClick={() => props.onDelete()}>Delete post</button>
@@ -36,9 +37,10 @@ Post.propTypes = {
       timestamp: PropTypes.number.isRequired,
       body: PropTypes.string.isRequired,
       voteScore: PropTypes.number.isRequired,
-      comments: PropTypes.number,
     }),
+    comments: PropTypes.array,
   }),
+  comments: PropTypes.array.isRequired,
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onUpvote: PropTypes.func.isRequired,

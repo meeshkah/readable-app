@@ -9,9 +9,22 @@ import { closePostModal } from '../actions/modals';
 class PostModal extends Component {
   render() {
     const { categories } = this.props;
+    const customStyle = {
+      overlay: {
+        backgroundColor: 'rgba(66, 110, 134, .75)',
+      },
+      content: {
+        top: '50%',
+        transform: 'translateY(-50%)',
+        bottom: 'auto',
+        borderRadius: '0',
+      }
+    }
+
     return (
       <Modal
         isOpen={this.props.isOpen}
+        style={customStyle}
         onRequestClose={() => this.props.dispatch(closePostModal())}
         contentLabel="Post Modal"
       >

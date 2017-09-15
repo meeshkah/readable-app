@@ -46,6 +46,11 @@ class PostsList extends Component {
         <Post
           key={postId}
           post={this.props.posts[postId]}
+          comments={
+            this.props.posts[postId].comments ?
+            this.props.posts[postId].comments.filter((commentId) => !this.props.comments[commentId].body.deleted) :
+            []
+          }
           onUpvote={() => this.handleUpvote(postId)}
           onDownvote={() => this.handleDownvote(postId)}
           onDelete={() => this.handleDelete(postId, this.props.posts[postId].comments)}
@@ -65,6 +70,7 @@ const mapStateToProps = (state = {}, { match }) => ({
   posts: state.posts,
   visiblePosts: state.visiblePosts,
   sortBy: state.sortPosts.sortBy,
+  comments: state.comments,
 });
 
 PostsList = withRouter(connect(
