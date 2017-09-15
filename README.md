@@ -10,6 +10,7 @@ Readable is a content and comment web app. Users are able to post content to pre
     - `node server`
 * In another terminal window, run the front-end App
     - `cd frontend`
+    - `npm install`
     - `npm start`
 
 ## Readable API Server
