@@ -69,6 +69,8 @@ class PostDetail extends Component {
                       this.props.posts[visiblePosts[0]].comments.length > 0) ?
                       this.props.posts[visiblePosts[0]].comments :
                       [];
+    const visibleComments = comments.filter((commentId) => !this.props.comments[commentId].body.deleted);
+
     return (
       <div className="c-post-detail">
         {visiblePosts.length > 0 && (
@@ -81,10 +83,9 @@ class PostDetail extends Component {
           />
         )}
         <CommentForm handleSubmit={(comment) => this.props.dispatch(newComment(comment, visiblePosts[0]))} />
-        {comments.length > 0 && <h2>Comments</h2>}
+        {visibleComments.length > 0 && <h2>{visibleComments.length} comment{visibleComments.length > 1 && 's'}</h2>}
         <div className="c-post-detail__comments">
-          {comments.map((commentId) =>
-            !this.props.comments[commentId].body.deleted && (
+          {visibleComments.map((commentId) => (
             <Comment
               key={commentId}
               comment={this.props.comments[commentId]}
