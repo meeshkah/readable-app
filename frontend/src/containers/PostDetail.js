@@ -76,6 +76,11 @@ class PostDetail extends Component {
         {visiblePosts.length > 0 && (
           <Post
             post={this.props.posts[visiblePosts[0]]}
+            comments={
+              this.props.posts[visiblePosts[0]].comments ?
+              this.props.posts[visiblePosts[0]].comments.filter((commentId) => !this.props.comments[commentId].body.deleted) :
+              []
+            }
             onUpvote={() => this.handlePostUpvote(visiblePosts[0])}
             onDownvote={() => this.handlePostDownvote(visiblePosts[0])}
             onDelete={() => this.handlePostDelete(visiblePosts[0], comments)}
