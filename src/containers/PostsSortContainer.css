@@ -1,0 +1,20 @@
+.c-sort {
+  display: block;
+  text-align: right;
+  margin-right: 2rem;
+}
+
+  .c-sort__title {
+    display: inline-block;
+    margin-right: 1rem;
+  }
+
+  .c-sort__select {
+    display: inline-block;
+    appearance: none;
+    font-family: "Average", serif;
+    border: 0 none;
+    border-radius: 0;
+    font-size: 1rem;
+    padding: .5rem;
+  }

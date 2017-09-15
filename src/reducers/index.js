@@ -5,6 +5,7 @@ import {
   ADD_POST,
   DELETE_POST,
   EDIT_POST,
+  SORT_POSTS,
   LOAD_CATEGORIES,
   POST_UPVOTE,
   POST_DOWNVOTE,
@@ -99,20 +100,60 @@ const posts = (state = {}, action) => {
 };
 
 const visiblePosts = (state = [], action) => {
+  const sortPosts = (postsIds, posts, sortBy) => {
+    return postsIds.concat().sort((a, b) => {
+      return parseFloat(posts[a].body[sortBy]) <
+        parseFloat(posts[b].body[sortBy]);
+    });
+  }
   switch (action.type) {
     case LOAD_POSTS:
-      return action.payload.posts
+      const postsIds = action.payload.posts
         .filter((post) => !post.deleted)
         .map((post) => post.id);
+      return action.payload.sortBy ?
+        sortPosts(postsIds, normalize(action.payload.posts), action.payload.sortBy) :
+        postsIds;
     case DELETE_POST:
       return state.filter((postId) => postId !== action.payload.postId);
     case ADD_POST:
       return [...state, action.payload.post.id];
     case LOAD_POST:
       return [action.payload.post.id];
+    case SORT_POSTS:
+      return sortPosts(state, action.payload.posts, action.payload.sortBy);
     default:
       return state;
   }
+}
+
+const sortPosts = (state = {
+  sortBy: '',
+  sortOptionsById: [
+    'timestamp',
+    'voteScore',
+  ],
+  sortOptions: {
+    timestamp: {
+      title: 'Date',
+      value: 'timestamp',
+    },
+    voteScore: {
+      title: 'Score',
+      value: 'voteScore',
+    },
+  }
+}, action) => {
+  switch (action.type) {
+    case SORT_POSTS:
+      return {
+        ...state,
+        sortBy: action.payload.sortBy,
+      }
+    default:
+      return state;
+  }
+
 }
 
 const postModal = (state = {
@@ -234,6 +275,7 @@ const comments = (state = {}, action) => {
 const rootReducer = combineReducers({
   posts,
   visiblePosts,
+  sortPosts,
   postModal,
   commentModal,
   categories,

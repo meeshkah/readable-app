@@ -14,12 +14,12 @@ import { openPostModal } from '../actions/modals';
 
 class PostsList extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchPosts(this.props.category));
+    this.props.dispatch(fetchPosts(this.props.category, this.props.sortBy));
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.category !== prevProps.category) {
-      this.props.dispatch(fetchPosts(this.props.category));
+      this.props.dispatch(fetchPosts(this.props.category, this.props.sortBy));
     }
   }
 
@@ -64,6 +64,7 @@ const mapStateToProps = (state = {}, { match }) => ({
   category: match.params.category,
   posts: state.posts,
   visiblePosts: state.visiblePosts,
+  sortBy: state.sortPosts.sortBy,
 });
 
 PostsList = withRouter(connect(

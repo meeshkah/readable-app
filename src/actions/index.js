@@ -4,19 +4,32 @@ import history from '../history';
 
 export const LOAD_POSTS = 'LOAD_POSTS';
 
-const loadPosts = (posts) => {
+const loadPosts = (posts, sortBy = '') => {
   return {
     type: LOAD_POSTS,
     payload: {
       posts,
+      sortBy,
     },
   }
 };
 
-export const fetchPosts = (category = '') => (dispatch) => {
+export const fetchPosts = (category = '', sortBy = '') => (dispatch) => {
   return api
     .getPosts(category)
-    .then((posts) => dispatch(loadPosts(posts)));
+    .then((posts) => dispatch(loadPosts(posts, sortBy)));
+};
+
+export const SORT_POSTS = 'SORT_POSTS';
+
+export const sortPosts = (sortBy, posts) => {
+  return {
+    type: SORT_POSTS,
+    payload: {
+      sortBy,
+      posts,
+    },
+  }
 };
 
 export const LOAD_POST = 'LOAD_POST';
