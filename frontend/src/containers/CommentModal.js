@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Modal from 'react-modal';
 import CommentForm from '../components/CommentForm';
-import { editComment } from '../actions';
+import { editComment } from '../actions/CommentActions';
 import { closeCommentModal } from '../actions/modals';
 
 class CommentModal extends Component {
@@ -24,26 +24,29 @@ class CommentModal extends Component {
       <Modal
         isOpen={this.props.isOpen}
         style={customStyle}
-        onRequestClose={() => this.props.dispatch(closeCommentModal())}
+        onRequestClose={() => this.props.closeCommentModal()}
         contentLabel="Comment Modal"
       >
         <CommentForm
           comment={this.props.comment}
-          handleSubmit={(comment) => this.props.dispatch(editComment(this.props.comment.body.id, comment))}
+          handleSubmit={(comment) => this.props.editComment(this.props.comment.body.id, comment)}
         />
       </Modal>
     );
   }
 }
 
-const mapStateToProps = (state = {}) => ({
-  comments: state.posts,
-  isOpen: state.commentModal.isOpen,
-  comment: state.commentModal.comment,
+const mapStateToProps = ({commentModal}) => ({
+  isOpen: commentModal.isOpen,
+  comment: commentModal.comment,
 });
 
 CommentModal = withRouter(connect(
   mapStateToProps,
+  {
+    editComment,
+    closeCommentModal,
+  }
 )(CommentModal));
 
 export default CommentModal;

@@ -9,57 +9,59 @@ import CommentModal from './CommentModal';
 import {
   fetchPost,
   deletePost,
-  fetchComments,
   fetchPostUpvote,
   fetchPostDownvote,
-  fetchCommentUpvote,
-  fetchCommentDownvote,
+} from '../actions/PostActions';
+import {
   newComment,
   deleteComment,
-} from '../actions';
+  fetchComments,
+  fetchCommentUpvote,
+  fetchCommentDownvote,
+} from '../actions/CommentActions';
 import { openCommentModal, openPostModal } from '../actions/modals';
 
 class PostDetail extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchPost(this.props.postId));
-    this.props.dispatch(fetchComments(this.props.postId));
+    this.props.fetchPost(this.props.postId);
+    this.props.fetchComments(this.props.postId);
   }
 
   // TODO: DRY handles (also used in PostsList)
   handlePostUpvote(postId) {
-    this.props.dispatch(fetchPostUpvote(postId));
+    this.props.fetchPostUpvote(postId);
   }
 
   handlePostDownvote(postId) {
-    this.props.dispatch(fetchPostDownvote(postId));
+    this.props.fetchPostDownvote(postId);
   }
 
   handlePostDelete(postId, postComments) {
-    this.props.dispatch(deletePost(postId, postComments));
+    this.props.deletePost(postId, postComments);
   }
 
   handlePostEdit(post) {
-    this.props.dispatch(openPostModal(post));
+    this.props.openPostModal(post);
   }
 
   handleCommentUpvote(commentId) {
-    this.props.dispatch(fetchCommentUpvote(commentId));
+    this.props.fetchCommentUpvote(commentId);
   }
 
   handleCommentDownvote(commentId) {
-    this.props.dispatch(fetchCommentDownvote(commentId));
+    this.props.fetchCommentDownvote(commentId);
   }
 
   handleCommentSubmit(comment, postId) {
-    this.props.dispatch(newComment(comment, postId));
+    this.props.newComment(comment, postId);
   }
 
   handleCommentDelete(commentId) {
-    this.props.dispatch(deleteComment(commentId));
+    this.props.deleteComment(commentId);
   }
 
   handleCommentEdit(comment) {
-    this.props.dispatch(openCommentModal(comment));
+    this.props.openCommentModal(comment);
   }
 
   render() {
@@ -87,7 +89,7 @@ class PostDetail extends Component {
             onEdit={() => this.handlePostEdit(this.props.posts[visiblePosts[0]])}
           />
         )}
-        <CommentForm handleSubmit={(comment) => this.props.dispatch(newComment(comment, visiblePosts[0]))} />
+        <CommentForm handleSubmit={(comment) => this.props.newComment(comment, visiblePosts[0])} />
         {visibleComments.length > 0 && <h2>{visibleComments.length} comment{visibleComments.length > 1 && 's'}</h2>}
         <div className="c-post-detail__comments">
           {visibleComments.map((commentId) => (
@@ -107,15 +109,28 @@ class PostDetail extends Component {
   }
 }
 
-const mapStateToProps = (state = {}, { match }) => ({
+const mapStateToProps = ({posts, visiblePosts, comments}, { match }) => ({
   postId: match.params.postId,
-  posts: state.posts,
-  visiblePosts: state.visiblePosts,
-  comments: state.comments,
+  posts,
+  visiblePosts,
+  comments,
 });
 
 PostDetail = withRouter(connect(
   mapStateToProps,
+  {
+    fetchPost,
+    deletePost,
+    fetchComments,
+    fetchPostUpvote,
+    fetchPostDownvote,
+    fetchCommentUpvote,
+    fetchCommentDownvote,
+    newComment,
+    deleteComment,
+    openCommentModal,
+    openPostModal,
+  }
 )(PostDetail));
 
 export default PostDetail;

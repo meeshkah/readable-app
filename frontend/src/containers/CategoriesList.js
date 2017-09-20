@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Category from '../components/Category';
-import { fetchCategories } from '../actions';
+import { fetchCategories } from '../actions/CategoryActions';
 import './CategoriesList.css';
 
 class CategoriesList extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchCategories());
+    this.props.fetchCategories();
   }
 
   render() {
     return (
       <div className="c-categories">
       {this.props.categories.map((category) => (
-        <Category 
-          key={category.path} 
-          path={category.path} 
+        <Category
+          key={category.path}
+          path={category.path}
           name={category.name}
         />
       ))}
@@ -24,13 +24,13 @@ class CategoriesList extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { categories } = state;
-  return {
-    categories,
-  };
-}
+const mapStateToProps = ({ categories }) => ({
+  categories,
+});
 
 export default connect(
   mapStateToProps,
+  {
+    fetchCategories,
+  }
 )(CategoriesList);

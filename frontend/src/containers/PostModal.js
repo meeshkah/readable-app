@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Modal from 'react-modal';
 import PostForm from '../components/PostForm';
-import { newPost, editPost } from '../actions';
+import { newPost, editPost } from '../actions/PostActions';
 import { closePostModal } from '../actions/modals';
 
 class PostModal extends Component {
@@ -25,7 +25,7 @@ class PostModal extends Component {
       <Modal
         isOpen={this.props.isOpen}
         style={customStyle}
-        onRequestClose={() => this.props.dispatch(closePostModal())}
+        onRequestClose={() => this.props.closePostModal()}
         contentLabel="Post Modal"
       >
         <PostForm
@@ -33,9 +33,9 @@ class PostModal extends Component {
           categories={categories}
           handleSubmit={(post) => {
             if (this.props.post) {
-              this.props.dispatch(editPost(this.props.post.body.id, post));
+              this.props.editPost(this.props.post.body.id, post);
             } else {
-              this.props.dispatch(newPost(post));
+              this.props.newPost(post);
             }
           }}
         />
@@ -44,15 +44,20 @@ class PostModal extends Component {
   }
 }
 
-const mapStateToProps = (state = {}) => ({
-  categories: state.categories,
-  posts: state.posts,
-  isOpen: state.postModal.isOpen,
-  post: state.postModal.post,
+const mapStateToProps = ({categories, posts, postModal}) => ({
+  categories,
+  posts,
+  isOpen: postModal.isOpen,
+  post: postModal.post,
 });
 
 PostModal = withRouter(connect(
   mapStateToProps,
+  {
+    newPost,
+    editPost,
+    closePostModal,
+  }
 )(PostModal));
 
 export default PostModal;

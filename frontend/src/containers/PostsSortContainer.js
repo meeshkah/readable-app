@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PostsSort from '../components/PostsSort';
-import { sortPosts } from '../actions';
+import { sortPosts } from '../actions/PostActions';
 import './PostsSortContainer.css';
 
 class PostsSortContainer extends Component {
   handleSort(sortBy) {
-    this.props.dispatch(sortPosts(sortBy, this.props.posts));
+    this.props.sortPosts(sortBy, this.props.posts);
   }
 
   render() {
@@ -26,14 +26,17 @@ class PostsSortContainer extends Component {
   }
 }
 
-const mapStateToProps = (state = {}) => ({
-  sortBy: state.sortPosts.sortBy,
-  sortOptions: state.sortPosts.sortOptionsById.map((option) => state.sortPosts.sortOptions[option]),
-  posts: state.posts,
+const mapStateToProps = ({sortPosts, posts}) => ({
+  sortBy: sortPosts.sortBy,
+  sortOptions: sortPosts.sortOptionsById.map((option) => sortPosts.sortOptions[option]),
+  posts,
 });
 
 PostsSortContainer = withRouter(connect(
   mapStateToProps,
+  {
+    sortPosts,
+  }
 )(PostsSortContainer));
 
 export default PostsSortContainer;

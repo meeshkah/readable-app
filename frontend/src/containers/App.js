@@ -8,7 +8,6 @@ import CategoriesList from './CategoriesList';
 import PostsList from './PostsList';
 import PostDetail from './PostDetail';
 import PostModal from './PostModal';
-import PostsSortContainer from './PostsSortContainer';
 import { openPostModal } from '../actions/modals';
 
 class App extends Component {
@@ -18,9 +17,6 @@ class App extends Component {
         <Header text="Readable" />
         <CategoriesList />
         <button className="c-new" onClick={() => this.props.dispatch(openPostModal())}>New post</button>
-        <div>
-          <PostsSortContainer />
-        </div>
         <div className="c-container">
           <Switch>
             <Route path="/" exact component={PostsList} />
