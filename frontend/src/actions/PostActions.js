@@ -56,8 +56,8 @@ export const fetchPost = (postId) => (dispatch) => {
   return api
     .getPost(postId)
     .then((post) => {
-      if (post.error) {
-        history.push(`/`);
+      if (!Object.keys(post).length || post.error) {
+        history.push(`/404`);
       } else {
         dispatch(loadPost(post));
       }
@@ -97,7 +97,11 @@ export const deletePost = (postId, postComments = [], currentCategory = '') => (
     .deletePost(postId)
     .then((post) => {
       dispatch(removePost(post.id, postComments));
-      history.push(`/${currentCategory}`);
+      if (currentCategory) {
+        history.push(`/category/${currentCategory}`);
+      } else {
+        history.push(`/`);
+      }
     });
 }
 

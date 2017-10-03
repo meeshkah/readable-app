@@ -44,7 +44,8 @@ class PostsList extends Component {
     return (
       <div>
         <PostsSortContainer />
-        {this.props.visiblePosts.map((postId) => (
+        {this.props.visiblePosts.length > 0 ?
+         this.props.visiblePosts.map((postId) => (
           <Post
             key={postId}
             post={this.props.posts[postId]}
@@ -60,7 +61,9 @@ class PostsList extends Component {
           >
             <Link className="c-post__more" to={`/${this.props.posts[postId].body.category}/${postId}`}>Read more</Link>
           </Post>
-        ))}
+        )) :
+        <div>No posts here yet</div>
+       }
         <PostModal />
       </div>
     );
