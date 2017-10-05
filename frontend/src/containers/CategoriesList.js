@@ -7,7 +7,7 @@ import './CategoriesList.css';
 
 class CategoriesList extends Component {
   componentDidMount() {
-    this.props.fetchCategories();
+    this.props.fetchCategories(this.props.category);
   }
 
   render() {

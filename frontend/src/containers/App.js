@@ -16,7 +16,10 @@ class App extends Component {
     return (
       <div className="App">
         <Header text="Readable" />
-        <CategoriesList />
+        <Switch>
+          <Route path="/category/:category" component={CategoriesList} />
+          <Route component={CategoriesList} />
+        </Switch>
         <button className="c-new" onClick={() => this.props.dispatch(openPostModal())}>New post</button>
         <div className="c-container">
           <Switch>

@@ -1,4 +1,5 @@
 import * as api from '../utils/api';
+import history from '../history';
 import {
   LOAD_CATEGORIES,
 } from './types';
@@ -12,8 +13,13 @@ const loadCategories = (categories) => {
   }
 };
 
-export const fetchCategories = () => (dispatch) => {
+export const fetchCategories = (currentCategory = '') => (dispatch) => {
   return api
     .getCategories()
-    .then((categories) => dispatch(loadCategories(categories.categories)));
+    .then((categories) => {
+      if (!categories.categories.find((category) => category.path === currentCategory)) {
+        history.push(`/404`);
+      }
+      dispatch(loadCategories(categories.categories));
+    });
 };
